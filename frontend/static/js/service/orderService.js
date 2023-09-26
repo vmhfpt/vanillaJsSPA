@@ -56,15 +56,15 @@ export default class Order extends Config {
           
         })
     }
-    updateStateOrderById(data){
-        const docRef = doc(this.orderRef, data.id);
-        return  updateDoc(docRef, {
+    async updateStateOrderById(data){
+        const docRef =  doc(this.orderRef, data.id);
+        return await updateDoc(docRef, {
             status : data.status
         });
     }
-    updateOrderById(data){
+    async updateOrderById(data){
         const docRef = doc(this.orderRef, data.id);
-        return  updateDoc(docRef, {
+        return await updateDoc(docRef, {
             address : data.address,
             email : data.email,
             phone_number : data.phoneNumber,
@@ -122,8 +122,8 @@ export default class Order extends Config {
                 alert('something went error');
             }) 
     }
-    getAllOrder() {
-        return  getDocs(this.orderRef)
+    async getAllOrder() {
+        return await getDocs(this.orderRef)
         .then((data) => {
             var dataItem = [];
             data.forEach((doc) => {
@@ -140,9 +140,9 @@ export default class Order extends Config {
             console.log(error);
         })
     }
-    insertOrderAndGetLastID(dataUser, dataCart){
+    async insertOrderAndGetLastID(dataUser, dataCart){
     
-        return  addDoc(this.orderRef, { 
+        return await addDoc(this.orderRef, { 
             address : dataUser.fullAddress,
             createdAt : Timestamp.fromDate(new Date()),
             email : dataUser.email,
@@ -150,7 +150,7 @@ export default class Order extends Config {
             phone_number : dataUser.phoneNumber,
             status : 6
         }) 
-        .then((result) => {
+        .then(async (result) => {
            
             let promises = dataCart.map(data => addDoc(this.orderDetailRef, {
                 order_id : result.id,
@@ -158,7 +158,7 @@ export default class Order extends Config {
                 product_id : data.id,
                 quantity : data.quantity
             }));
-           return  Promise.all(promises)
+           return  await Promise.all(promises)
             .then((docRefs) => {
                 return {
                     status : 'success',

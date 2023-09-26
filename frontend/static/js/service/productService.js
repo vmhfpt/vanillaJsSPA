@@ -4,6 +4,9 @@ import {  ref , uploadBytes, uploadBytesResumable, getDownloadURL , deleteObject
 import  Config  from './config.js';
 import Category from './categoryService.js';
 import Comment from './commentService.js';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+
 export default class Product extends Config {
     constructor() {
         super();
