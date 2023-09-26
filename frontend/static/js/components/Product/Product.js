@@ -15,35 +15,71 @@ export default class extends AbstractView {
       var idDelete = 0;
       var idUpdate = 0;
       
-        const renderProducts = () => {
-
-          product.getAllProduct().then(result => {
-          $('.show-table').empty();
-          $('.loading-animation').remove();
-            result.map((item, key) => {
-               
-                
-                $('.show-table').append(`<tr id="${item.id}">
-              <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>#${(key) + 1}</strong></td>
-              <td>${item.name}</td>
-              <td><img class="object-fit-cover" src="${item.image}" width="120" height="150" /> </td>
-              <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price_sale)}</td>
-            
-              
-              <td>
-                <div class="dropdown">
-                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                  <div class="dropdown-menu">
-                    <a onclick="editHandle(this);" data-edit="${item.id}" class="dropdown-item edit-handle" href="javascript:;"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                    <a onclick="confirmDelete(this);" data-delete="${item.id}" class="dropdown-item confirm-delete" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                  </div>
-                </div>
-              </td>
-            </tr>`);
-            })
-         });
+        const handlePaginate = (data) => {
+          
+          let template = "";
+           for(let i = 1; i <= data.total_page; i ++){
+                template = template + `  <li onclick="changePage(this)" data-page="${i}" class="page-item ${i == data.page_current ? `active` : ``}">
+                <a class="page-link" href="javascript:void(0);" ">${i}</a>
+              </li>`;
+            }
+           let append = `<nav aria-label="Page navigation">
+           <ul class="pagination">
+                ${data.prev_page ? ` <li onclick="changePage(this)" data-page="${data.prev_page}" class="page-item prev">
+                <a class="page-link" href="javascript:void(0);"  ><i class="tf-icon bx bx-chevron-left"></i></a>
+              </li>` : ``}
+              ${template}
+               ${data.next_page ? `<li onclick="changePage(this)" data-page="${data.next_page}" class="page-item next">
+               <a class="page-link" href="javascript:void(0);"  ><i class="tf-icon bx bx-chevron-right"></i></a>
+             </li>` : ``}
+           </ul>
+             </nav>
+           `;
+           $('.show-pagination').html(append);
         }
-        renderProducts();
+        const renderProducts = (page = 1) => {
+          
+           product.getProductAndPaginate(page).then((data) => {
+            $('.show-table').empty();
+            $('.loading-animation').remove();
+              data.dataItem.map((item, key) => {
+                 
+                  
+                  $('.show-table').append(`<tr id="${item.id}">
+                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>#${(key) + 1}</strong></td>
+                <td>${item.name}</td>
+                <td><img class="object-fit-cover" src="${item.image}" width="120" height="150" /> </td>
+                <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price_sale)}</td>
+              
+                
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                    <div class="dropdown-menu">
+                      <a onclick="editHandle(this);" data-edit="${item.id}" class="dropdown-item edit-handle" href="javascript:;"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                      <a onclick="confirmDelete(this);" data-delete="${item.id}" class="dropdown-item confirm-delete" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>`);
+              })
+             handlePaginate(data.pagination);
+           })
+        }
+        renderProducts(1);
+        
+
+        window.changePage = (thisData) => {
+          $(thisData).prop('disabled', true);
+          $(thisData).empty();
+          $(thisData).append(` <li   class="page-item active">
+          <a class="page-link" href="javascript:void(0);" ">  <div class="spinner-border spinner-border-sm text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div></a>
+        </li>`);
+          let page = Number(($(thisData).attr("data-page")));
+          renderProducts(page);
+        }
 
          window.addHandle = () => {
             $('.show-popup-edit').html(Add);
@@ -186,10 +222,14 @@ export default class extends AbstractView {
         </div>
     
         <div class="my-3">
+          <div class="show-pagination">
+       
+          </div>
+
           <div class="demo-inline-spacing">
            
              <a onclick="addHandle();" href="javascript:;" class="add-handle"> <button type="button" class="btn btn-success">Add product</button></a>
-            
+             
           </div>
         </div>
         

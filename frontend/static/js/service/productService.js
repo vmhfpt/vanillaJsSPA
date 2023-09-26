@@ -4,8 +4,12 @@ import {  ref , uploadBytes, uploadBytesResumable, getDownloadURL , deleteObject
 import  Config  from './config.js';
 import Category from './categoryService.js';
 import Comment from './commentService.js';
+
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+
+
+
 
 export default class Product extends Config {
     constructor() {
@@ -13,7 +17,46 @@ export default class Product extends Config {
         this.productRef = collection(this.db, "products");
     }
 
+   async getProductAndPaginate(page) {
+    var limitItem = 5;
+    return await getDocs(this.productRef)
+    .then(async (data) => {
+        return await getDocs(query(this.productRef, orderBy(firebase.firestore.FieldPath.documentId()), limit(limitItem * page)))
+        .then((dataProduct) => {
+            
+            var dataItem = [];
+               dataProduct.forEach((doc) => {
+                  dataItem = [
+                     ...dataItem,
+                     {
+                        id : doc.id,
+                        ...doc.data()
+                     }
+                  ]
+                });
+            let total = data.size;
+            var total_pages = Math.ceil(total/limitItem);
+            let prevPage = page > 1 ? page - 1 : false;
+            let nextPage = page < total_pages ? page + 1 : false;
+            let paginate = {
+                total_item : data.size,
+                item_per_page : limitItem,
+                page_current : page,
+                total_page : total_pages,
+                prev_page : prevPage,
+                next_page : nextPage,
+                item_showed : page * limitItem
+            }
+            
+            return( {
+                dataItem : dataItem,
+                pagination : paginate
+            });
+        })
+    })
+   }
    async getProductByPrice(object){
+
         
         return await getDocs(this.productRef)
             .then((data) => {
