@@ -1,5 +1,5 @@
-import { getDoc, deleteDoc ,updateDoc, getDocs, collection, setDoc, doc, addDoc,  query, where, orderBy} from "firebase/firestore";
-import {  ref , uploadBytes, uploadBytesResumable, getDownloadURL , deleteObject} from "firebase/storage";
+import { getDoc, deleteDoc ,updateDoc, getDocs, collection,  doc, addDoc,  query, where, orderBy} from "firebase/firestore";
+//import {  ref , uploadBytes, uploadBytesResumable, getDownloadURL , deleteObject} from "firebase/storage";
 
 import  Config  from './config.js';
 
@@ -21,7 +21,7 @@ export default class Order extends Config {
             price : data.price,
             product_id : data.productId,
             quantity : Number(data.quantity)
-        }).then((data) => {
+        }).then(() => {
             return {
                 status : "success"
             }
@@ -159,7 +159,7 @@ export default class Order extends Config {
                 quantity : data.quantity
             }));
            return  await Promise.all(promises)
-            .then((docRefs) => {
+            .then(() => {
                 return {
                     status : 'success',
                 }

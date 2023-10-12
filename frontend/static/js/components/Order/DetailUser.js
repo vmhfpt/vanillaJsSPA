@@ -3,7 +3,7 @@ import axios from 'axios';
 export default function  DetailUser(item, reLoad){
    let order = new Order();
    axios.get("https://provinces.open-api.vn/api/").then(function (response) {         
-        response.data.map((item, key) => {
+        response.data.map((item) => {
             $('#show-provinces').append(`<option value="${item.code}" > ${item.name}</option>`)
         })
    })
@@ -18,7 +18,7 @@ export default function  DetailUser(item, reLoad){
         }
 
         axios.get(`https://provinces.open-api.vn/api/p/${$(thisData).val()}/?depth=2`).then(function (response) {
-            response.data.districts.map((item, key) => {
+            response.data.districts.map((item) => {
                     
             $('#show-districts').append(`<option value="${item.code}" > ${item.name}</option>`)
         })
@@ -37,7 +37,7 @@ export default function  DetailUser(item, reLoad){
         
         axios.get(`https://provinces.open-api.vn/api/d/${$(thisData).val()}/?depth=2`).then(function (response) {
         
-            response.data.wards.map((item, key) => {
+            response.data.wards.map((item) => {
             
                 $('#show-wards').append(`<option value="${item.code}" > ${item.name}</option>`)
             })
@@ -71,7 +71,7 @@ export default function  DetailUser(item, reLoad){
           address,
         }
     
-        order.updateOrderById(dataUser).then((data) => {
+        order.updateOrderById(dataUser).then(() => {
           reLoad();
           $('#exampleModalLabelCustom').text('Updated successfully');
           $('#exampleModalSuccess').modal('toggle');

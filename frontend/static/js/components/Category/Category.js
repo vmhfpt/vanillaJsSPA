@@ -1,3 +1,6 @@
+// import $ from "jquery";
+// import 'bootstrap';  
+//error (...).modal is not a function
 import AbstractView from "../AbstractView.js";
 import Category from "../../service/categoryService.js";
 import Add from "./add.js";
@@ -53,16 +56,16 @@ export default class extends AbstractView {
             idDelete = thisData.dataset.delete;
          }
          window.addHandle = () => {
-          // var myModal = new bootstrap.Modal(document.getElementById('basicModal'), {});
-          // myModal.toggle();
+          
             $('.show-popup').html(Add(renderList));
+
             $('#basicModal').modal('toggle');
          }
         
         
          
          window.deleteItem = () => {
-            category.deleteCategoryByID(idDelete).then((data) => {
+            category.deleteCategoryByID(idDelete).then(() => {
                 $('#exampleModal').modal('toggle');
   
                // $('#exampleModalLabelCustom').text(`Delete successfully`);

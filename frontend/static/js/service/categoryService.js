@@ -1,4 +1,4 @@
-import { getDoc, deleteDoc ,updateDoc, getDocs, collection, setDoc, doc, addDoc,  query, where} from "firebase/firestore";
+import { getDoc, deleteDoc ,updateDoc, getDocs, collection,  doc, addDoc,  query, where} from "firebase/firestore";
 import  Config  from './config.js';
 
 export default class Category extends Config {
@@ -26,13 +26,13 @@ export default class Category extends Config {
     }
     async addCategory(name){
         return await addDoc(this.categoriesRef, { name : name}) 
-        .then((data) => {
+        .then(() => {
             return {
                 status : 'success'
             }
         })
         .catch((error) => {
-
+            console.log(error);
         })
     }
     async updateCategory(name, id){

@@ -7,19 +7,23 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build": "webpack --config webpack.config.js  --watch",
-    "app": "npm run build & npm start"
+    "eslint": "npx eslint frontend/static/js/**",
+    "app": "npm run build | npm start | npm run eslint"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.5.0",
+    "bootstrap": "^5.3.2",
     "express": "^4.17.1",
     "firebase": "^10.4.0",
+    "jquery": "^3.7.1",
     "nodemon": "^3.0.1",
     "source-map-loader": "^4.0.1"
   },
   "devDependencies": {
+    "eslint": "^8.51.0",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   }

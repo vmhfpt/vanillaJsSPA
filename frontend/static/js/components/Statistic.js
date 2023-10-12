@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 import Order from "../service/orderService.js";
+
 export default class extends AbstractView {
     constructor(params) {
         super(params);
@@ -36,7 +37,7 @@ export default class extends AbstractView {
         function showPieChart(reslut){
             const ctx = document.getElementById("pieChart").getContext('2d');
         
-            const myChart = new Chart(ctx, {
+            new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ["on hold", "processing", "been shipped", "success", "cancelled"
@@ -83,7 +84,7 @@ export default class extends AbstractView {
            
             var dataItem = [];
             let onHold = 0,processing = 0, beenShipped = 0, success = 0, cancelled = 0;
-             data.dataOrder.map((item, key) => {
+             data.dataOrder.map((item) => {
                 dataItem.push({
                     ...item,
                     createdAt : convertDate(item.createdAt)
@@ -116,11 +117,15 @@ export default class extends AbstractView {
                   return [key, item.name];
               })
               showBarChart(arrBarChart, dataBarChart);
-          
+
+              //console.log([onHold,  processing, beenShipped, success, cancelled])
+              //console.log(result);
+            //  console.log(arrBarChart, dataBarChart)
+             
            
         })
 
-        return `
+        return /*html */ `
         <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home/</span> Statistic
       </h4>

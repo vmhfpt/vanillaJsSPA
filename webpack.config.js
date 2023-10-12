@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  
   entry: './frontend/static/js/index.js',
   output: {
     filename: 'main.js',
@@ -14,6 +15,8 @@ module.exports = {
         enforce: 'pre',
         use: ['source-map-loader'],
       },
-    ],
+    ]
   },
+
+
 };

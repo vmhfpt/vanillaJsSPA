@@ -14,7 +14,7 @@ export default class extends AbstractView {
         product.getAllProduct().then((data) => {
             
             
-            data.map((item, key) => {
+            data.map((item) => {
                 $('#product-select').append(`<option value="${item.id}/${item.price_sale}">${item.name} -- ${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price_sale)} </option>`)
             })
         })

@@ -1,4 +1,4 @@
-import { getDoc, deleteDoc ,updateDoc, getDocs, collection, setDoc, doc, addDoc,  query, where} from "firebase/firestore";
+import { getDocs, collection, addDoc,  query, where} from "firebase/firestore";
 import  Config  from './config.js';
 
 export default class Comment extends Config {
@@ -14,13 +14,13 @@ export default class Comment extends Config {
             name : dataComment.name,
             product_id : dataComment.product_id
         }) 
-        .then((data) => {
+        .then(() => {
             return {
                 status : 'success'
             }
         })
         .catch((error) => {
-
+            console.log(error);
         })
     }
 

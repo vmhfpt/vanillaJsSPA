@@ -11,7 +11,7 @@ export default function Edit(item, renderProducts){
                 
           $('.loading-update').addClass('d-none');
           $('.show-form-update').removeClass('d-none');
-          data.map((value, key) => {
+          data.map((value) => {
               $('#category_id1').append(`<option ${value.id == item.category_id ? 'selected': ''} value="${value.id}"> ${value.name}</option>`);
           })
     })
@@ -25,9 +25,9 @@ export default function Edit(item, renderProducts){
           
           
           let name = $("#name1").val();
-          let price = $("#price1").val();
+          let price = Number($("#price1").val());
           let category = $("#category_id1").val();
-          let priceSale = $("#price_sale1").val();
+          let priceSale = Number($("#price_sale1").val());
           let description = $("#description1").val();
           let content = $("#content1").val();
 
@@ -41,11 +41,11 @@ export default function Edit(item, renderProducts){
               content
           }
       
-          product.updateProduct(dataProduct, file).then((data) => {
+          product.updateProduct(dataProduct, file).then(() => {
             $('#basicModalUpdate').modal('toggle');
             $('#exampleModalLabelCustom').text(`Update product "${dataProduct.name}" success `);
             $('#exampleModalSuccess').modal('toggle');
-            renderProducts();
+            renderProducts(1);
           })
     }
     return (`<div class="modal fade " id="basicModalUpdate" tabindex="-1"  aria-modal="true" role="dialog">

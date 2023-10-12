@@ -1,5 +1,5 @@
-import { getDoc, deleteDoc ,updateDoc, getDocs, collection, setDoc, doc, addDoc,  query, where, orderBy, limit} from "firebase/firestore";
-import {  ref , uploadBytes, uploadBytesResumable, getDownloadURL , deleteObject} from "firebase/storage";
+import { getDoc, deleteDoc ,updateDoc, getDocs, collection,  doc, addDoc,  query, where, orderBy, limit} from "firebase/firestore";
+import {  ref ,uploadBytesResumable, getDownloadURL , deleteObject} from "firebase/storage";
 
 import  Config  from './config.js';
 import Category from './categoryService.js';
@@ -188,15 +188,15 @@ export default class Product extends Config {
             description : dataProduct.description,
             image : img,
             name : dataProduct.name,
-            price : dataProduct.price,
-            price_sale : dataProduct.priceSale
+            price : Number(dataProduct.price),
+            price_sale : Number(dataProduct.priceSale)
         }) 
-        .then((data) => {
+        .then(() => {
            
             location.reload();
         })
         .catch((error) => {
-
+            console.log(error);
         })
     }
     async uploadFile(file, dataProduct){
@@ -245,7 +245,7 @@ export default class Product extends Config {
              Promise.all([
                 deleteDoc(docRef),
                 deleteObject(deleteRef)
-            ]).then(([v1, v2]) => {
+            ]).then(([]) => {
                return {
                  status : "delete success"
                }
@@ -285,8 +285,8 @@ export default class Product extends Config {
                 content : data.content,
                 description : data.description,
                 name : data.name,
-                price : data.price,
-                price_sale : data.priceSale
+                price : Number(data.price),
+                price_sale : Number(data.priceSale)
             });
         }else {
              

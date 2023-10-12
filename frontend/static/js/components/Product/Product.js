@@ -10,7 +10,6 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-      let category = new Category();
       let product = new Product();
       var idDelete = 0;
       var idUpdate = 0;
@@ -101,7 +100,7 @@ export default class extends AbstractView {
        
        
          window.deleteItem = () => {
-            product.productDeleteByID(idDelete).then((data) => {
+            product.productDeleteByID(idDelete).then(() => {
               $('#exampleModal').modal('toggle');
 
               $('#exampleModalLabelCustom').text(`Delete successfully`);
@@ -123,7 +122,7 @@ export default class extends AbstractView {
             }
         }
         window.customFile = (thisData) => {
-          var fileName = $(thisData).val().split("\\").pop();
+          //var fileName = $(thisData).val().split("\\").pop();
           readURL(thisData);
         }
                  
