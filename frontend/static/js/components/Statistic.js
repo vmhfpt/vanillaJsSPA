@@ -81,7 +81,7 @@ export default class extends AbstractView {
             })
         }
         order.getStatisticOrder().then((data) => {
-           
+           //console.log(data);
             var dataItem = [];
             let onHold = 0,processing = 0, beenShipped = 0, success = 0, cancelled = 0;
              data.dataOrder.map((item) => {
@@ -96,15 +96,21 @@ export default class extends AbstractView {
                 if(item.status == '2') cancelled ++;
              });
 
+             
+              
              var result = Object.values(dataItem.reduce(function(acc, obj) {
+                
                 var key = obj['createdAt'];
                 if (!acc[key]) {
                   acc[key] = {label: key, y: 0};
                 }
                 acc[key].y += 1;
+               
                 return acc;
               }, {}));
+              
 
+             
               
               $('.title-loading').removeClass('d-none');
               $('.loading-animation').remove();

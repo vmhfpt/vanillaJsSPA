@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-
+import Order from "../service/orderService.js";
 
 export default class extends AbstractView {
     constructor(params) {
@@ -8,9 +8,57 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-     
+      let order = new Order();
+      order.getStatisticOrder().then((data) => {
+           
+        let onHold = 0,processing = 0, beenShipped = 0, success = 0, cancelled = 0;
+         data.dataOrder.map((item) => {
+            
+            if(item.status == '5') processing ++;
+            if(item.status == '4') beenShipped ++;
+            if(item.status == '3') success ++;
+            if(item.status == '2') cancelled ++;
+         });
+         $('.show').removeClass('d-none');
+         $('.loading-update').remove();
+         $('.show-shipped').text(beenShipped);
+         $('.show-canceled').text(cancelled);
+         $('.show-processing').text(processing);
+         $('.show-success').text(success);
+    })
         return /*html */ `
-        <div class="row">
+        <div class="px-y d-flex justify-content-center loading-update">
+        <div class="">
+          <div class="spinner-grow" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-secondary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div class="spinner-grow text-dark" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+    </div>
+        <div class="row d-none show">
         <div class="col-lg-12 mb-4 order-0">
             <div class="row"> 
             <div class="col-lg-3 col-md-12 col-6 mb-4">
@@ -23,8 +71,8 @@ export default class extends AbstractView {
                   
                 </div>
                 <span class="fw-medium d-block mb-1"> Order success</span>
-                <h3 class="card-title mb-2">$12,628</h3>
-                <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                <h3 class="card-title mb-2 show-success"></h3>
+               
               </div>
             </div>
           </div>
@@ -38,8 +86,8 @@ export default class extends AbstractView {
                   
                 </div>
                 <span>Order processing</span>
-                <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                <h3 class="card-title text-nowrap mb-1 show-processing"></h3>
+                
               </div>
             </div>
           </div>
@@ -53,8 +101,8 @@ export default class extends AbstractView {
                   
                 </div>
                 <span>Order canceled</span>
-                <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                <h3 class="card-title text-nowrap mb-1 show-canceled"></h3>
+               
               </div>
             </div>
           </div>
@@ -67,9 +115,9 @@ export default class extends AbstractView {
                   </div>
                  
                 </div>
-                <span>Revenue</span>
-                <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-                <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                <span>Been shipped</span>
+                <h3 class="card-title text-nowrap mb-1 show-shipped"></h3>
+               
               </div>
             </div>
           </div>

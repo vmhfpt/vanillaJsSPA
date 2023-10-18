@@ -90,7 +90,7 @@ export default class extends AbstractView {
               
          }
 
-        return `
+        return /*html */`
       
     <div class="show-popup"></div>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

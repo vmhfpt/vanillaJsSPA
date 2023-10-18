@@ -9,6 +9,7 @@ export default class Category extends Config {
     async getAllCategory(){
        return await getDocs(collection(this.db, "categories"))
             .then((data) => {
+                
                 var dataItem = [];
                 data.forEach((doc) => {
                   dataItem = [

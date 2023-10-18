@@ -2,7 +2,7 @@ import Category from "../../service/categoryService.js";
 import { validateName } from "../../service/validateService.js";
 export default function Edit(item, renderList){
    let category = new Category();
-   var checkName = false;
+   var checkName = true;
    window.handleInputName = (thisData) => {
     checkName = validateName({target : thisData, name : "Name"}, $('.error-name'));
   }

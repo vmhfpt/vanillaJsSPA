@@ -23,7 +23,7 @@ export default class Product extends Config {
     .then(async (data) => {
         return await getDocs(query(this.productRef, orderBy(firebase.firestore.FieldPath.documentId()), limit(limitItem * page)))
         .then((dataProduct) => {
-            
+            console.log(dataProduct)
             var dataItem = [];
                dataProduct.forEach((doc) => {
                   dataItem = [
@@ -272,14 +272,9 @@ export default class Product extends Config {
             console.log(error);
         })
     }
-    async updateProduct(data, file){
+    async updateProduct(data){
         const docRef = doc(this.productRef, data.id);
-        // return await updateDoc(docRef, {
-        //     name : name
-        // });
-       // console.log(data, file)
-        if(file == false){
-           // const docRef = doc(this.productRef, data.id);
+    
             return await updateDoc(docRef, {
                 category_id : data.category,
                 content : data.content,
@@ -288,9 +283,7 @@ export default class Product extends Config {
                 price : Number(data.price),
                 price_sale : Number(data.priceSale)
             });
-        }else {
-             
-        }
+        
     }
     async getDetailProduct(id){
         const docRef = doc(this.productRef, id);

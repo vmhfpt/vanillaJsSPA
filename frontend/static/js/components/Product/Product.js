@@ -126,7 +126,7 @@ export default class extends AbstractView {
           readURL(thisData);
         }
                  
-        return `
+        return /*html */`
         <div class="show-popup-edit"></div>
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

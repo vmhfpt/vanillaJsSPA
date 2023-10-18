@@ -100,8 +100,9 @@ export default class Order extends Config {
                     }
                     
                   });
-                  
+                  //console.log(groupedData)
                   let arr = Object.entries(groupedData).map(([key, value]) => ({ productID :key, quantity : value }));
+                  //console.log(arr)
                   for (const docs of arr) {
                         const productSnapshot = await getDoc(doc(this.productRef, docs.productID));
                         

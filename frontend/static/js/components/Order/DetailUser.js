@@ -79,7 +79,7 @@ export default function  DetailUser(item, reLoad){
         })
      }
 
-    return `<div class="modal fade " id="basicModalEdit" tabindex="-1"  aria-modal="true" role="dialog">
+    return /*html */ `<div class="modal fade " id="basicModalEdit" tabindex="-1"  aria-modal="true" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

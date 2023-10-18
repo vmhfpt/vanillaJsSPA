@@ -41,14 +41,14 @@ export default function Edit(item, renderProducts){
               content
           }
       
-          product.updateProduct(dataProduct, file).then(() => {
+          product.updateProduct(dataProduct).then(() => {
             $('#basicModalUpdate').modal('toggle');
             $('#exampleModalLabelCustom').text(`Update product "${dataProduct.name}" success `);
             $('#exampleModalSuccess').modal('toggle');
             renderProducts(1);
           })
     }
-    return (`<div class="modal fade " id="basicModalUpdate" tabindex="-1"  aria-modal="true" role="dialog">
+    return ( /*html */`<div class="modal fade " id="basicModalUpdate" tabindex="-1"  aria-modal="true" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">

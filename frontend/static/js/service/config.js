@@ -1,10 +1,7 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
-// import {  getFirestore } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-//import { getStorage } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-storage.js";
      export default class Config {
             constructor() {
                 this.firebaseConfig = {
